@@ -1,8 +1,52 @@
 function love.load()
 	love.graphics.setBackgroundColor(0,0,0)
+	
+	screen_width = 500
+	screen_height = 300
+	
+	paddle1_width = 20
+	paddle1_height = 70
+	paddle1_x = 0
+	paddle1_y = (screen_height / 2) - (paddle1_height / 2)
+	
+	paddle2_width = 20
+	paddle2_height = 70
+	paddle2_x = 480
+	paddle2_y = (screen_height / 2) - (paddle2_height / 2)
+	
+	paddle1_speed = 400
+	
+	ball_height = 10
+	ball_width = 10
+	ball_x = 250
+	ball_y = 150
+	
+	ball_speed = 100
+	
+	love.window.setTitle('Pong')
+    love.window.setMode(screen_width, screen_height)
+end
+
+function love.update(dt)
+	if love.keyboard.isDown('w') then
+		paddle1_y = paddle1_y - (paddle1_speed * dt)
+	end
+	
+	if love.keyboard.isDown('s') then
+		paddle1_y = paddle1_y + (paddle1_speed * dt)
+	end
+	
+	if paddle1_y < 0 then
+		paddle1_y = 0
+	elseif (paddle1_y + paddle1_height) > screen_height then
+        paddle1_y = screen_height - paddle1_height
+    end
+    
 end
 
 function love.draw()
     love.graphics.setColor(255,255,255)
-    love.graphics.polygon('fill', 100, 100, 200, 100, 150, 200)
+    love.graphics.rectangle('fill', paddle1_x, paddle1_y, paddle1_width, paddle1_height)
+    love.graphics.rectangle('fill', paddle2_x, paddle2_y, paddle2_width, paddle2_height)
+    love.graphics.rectangle('fill', ball_x, ball_y, ball_width, ball_height)
 end
