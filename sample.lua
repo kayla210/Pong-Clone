@@ -29,7 +29,7 @@ function love.load()
 	
 	--Window title and size
 	love.window.setTitle('Pong')
-    love.window.setMode(screen_width, screen_height)
+    	love.window.setMode(screen_width, screen_height)
 	
 	--Pause variable
 	state = 'play'
