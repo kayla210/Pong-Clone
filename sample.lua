@@ -32,7 +32,7 @@ function love.load()
     	love.window.setMode(screen_width, screen_height)
 	
 	--Pause variable
-	state = 'play'
+	state = 'notstarted'
 end
 
 function love.update(dt)
@@ -113,21 +113,38 @@ function love.draw()
     	love.graphics.rectangle('fill', paddle2_x, paddle2_y, paddle2_width, paddle2_height)
     	love.graphics.rectangle('fill', ball_x, ball_y, ball_width, ball_height)
 	
+	if state == 'notstarted' then
+		love.graphics.setColor(0, 0, 0, 100)
+		love.graphics.rectangle('fill', 0, 0, screen_width, screen_height)
+		love.graphics.setColor(255,255,255)
+		love.graphics.setFont(love.graphics.newFont(18))
+		love.graphics.print("Press ENTER to start Pong!", (screen_width / 2) - 110, (screen_height / 2) - 25)
+	end
+	
 	if state == 'pause' then
 		love.graphics.setColor(0, 0, 0, 100)
 		love.graphics.rectangle('fill', 0, 0, screen_width, screen_height)
+		love.graphics.setColor(255,255,255)
+		love.graphics.setFont(love.graphics.newFont(18))
+		love.graphics.print("PAUSED", (screen_width / 2) - 40, (screen_height / 2) - 25)
 	end
 end
 
 function love.keypressed(key)
+	if key == 'return' then
+		if state == 'notstarted' then
+			state = 'play'
+		end
+	end
+	
 	if key == 'q' or key == 'escape' then
-		love.event.push('q')
+		love.event.quit()
 	end
 	
 	if key == 'p' then
 		if state == 'play' then
 			state = 'pause'
-		else
+		elseif state == 'pause' then
 			state = 'play'
 		end
 	end
