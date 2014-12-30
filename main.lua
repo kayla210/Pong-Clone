@@ -95,12 +95,30 @@ function love.update(dt)
     	end
 
 	--If one of the paddles misses the ball, respawn ball
-    	if ball_x + ball_width < 0 or ball_x > screen_width then
+    	--[[if ball_x + ball_width < 0 or ball_x > screen_width then
         	ball_x = (screen_width / 2) - (ball_width / 2)
         	ball_y = (screen_height / 2) - (ball_height / 2)
         	ball_speed_x = -200
         	ball_speed_y = 200
+    	end--]]
+    
+    	--If paddle1 misses the ball, paddle2 wins
+    	if ball_x + ball_width < 0 then
+    		ball_x = (screen_width / 2) - (ball_width / 2)
+	 	ball_y = (screen_height / 2) - (ball_height / 2)
+	 	ball_speed_x = -200
+        	ball_speed_y = 200
+    		state = 'paddle2win'
     	end
+    
+    	--If paddle2 misses the ball, paddle1 wins
+	if ball_x > screen_width then
+		ball_x = (screen_width / 2) - (ball_width / 2)
+        	ball_y = (screen_height / 2) - (ball_height / 2)
+        	ball_speed_x = -200
+        	ball_speed_y = 200
+		state = 'paddle1win'
+	end
 
 	--Move the ball according to speed and time
     	ball_x = ball_x + (ball_speed_x * dt)
@@ -127,6 +145,22 @@ function love.draw()
 		love.graphics.setColor(255,255,255)
 		love.graphics.setFont(love.graphics.newFont(18))
 		love.graphics.print("PAUSED", (screen_width / 2) - 40, (screen_height / 2) - 25)
+	end
+	
+	if state == 'paddle1win' then
+		love.graphics.setColor(0, 0, 0, 100)
+		love.graphics.rectangle('fill', 0, 0, screen_width, screen_height)
+		love.graphics.setColor(255,255,255)
+		love.graphics.setFont(love.graphics.newFont(18))
+		love.graphics.print("PADDLE 1 WINS", (screen_width / 2) - 40, (screen_height / 2) - 25)
+	end
+	
+	if state == 'paddle2win' then
+		love.graphics.setColor(0, 0, 0, 100)
+		love.graphics.rectangle('fill', 0, 0, screen_width, screen_height)
+		love.graphics.setColor(255,255,255)
+		love.graphics.setFont(love.graphics.newFont(18))
+		love.graphics.print("PADDLE 2 WINS", (screen_width / 2) - 40, (screen_height / 2) - 25)
 	end
 end
 
