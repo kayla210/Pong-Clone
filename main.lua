@@ -16,6 +16,7 @@ function love.update(dt)
 	objectBoundaries()
 	hitPaddle()
 	missPaddle()
+	increaseObjectSpeed()
 end
 
 function love.draw()
@@ -199,6 +200,24 @@ function missPaddle()
         	ball_speed_x = -200
         	ball_speed_y = 200
 		state = 'paddle1win'
+	end
+end
+
+--###### As the game goes on, increase object speed for increased difficulty ######
+function increaseObjectSpeed()
+	paddle1_speed = paddle1_speed + 0.1
+	paddle2_speed = paddle2_speed + 0.1
+	
+	if ball_speed_x > 0 then
+		ball_speed_x = ball_speed_x + 0.1
+	elseif ball_speed_x < 0 then
+		ball_speed_x = ball_speed_x - 0.1
+	end
+	
+	if ball_speed_y > 0 then
+		ball_speed_y = ball_speed_y + 0.1
+	elseif ball_speed_y < 0 then
+		ball_speed_y = ball_speed_y - 0.1
 	end
 end
 
