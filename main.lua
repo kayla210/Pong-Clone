@@ -68,6 +68,12 @@ function love.keypressed(key)
 			state = 'play'
 		end
 	end
+
+	if key == 'r' then
+		if state == 'paddle1win' or state == 'paddle2win' then
+			state = 'play'
+		end
+	end
 end
 
 --###### Initialize game window ######
@@ -186,19 +192,13 @@ function missPaddle()
     
     	--If paddle1 misses the ball, paddle2 wins
     	if ball_x + ball_width < 0 then
-    		ball_x = (screen_width / 2) - (ball_width / 2)
-        	ball_y = (screen_height / 2) - (ball_height / 2)
-        	ball_speed_x = -200
-        	ball_speed_y = 200
+		initializeObject()
     		state = 'paddle2win'
-    	end
+ 	end
     
     	--If paddle2 misses the ball, paddle1 wins
 	if ball_x > screen_width then
-		ball_x = (screen_width / 2) - (ball_width / 2)
-        	ball_y = (screen_height / 2) - (ball_height / 2)
-        	ball_speed_x = -200
-        	ball_speed_y = 200
+		initializeObject()
 		state = 'paddle1win'
 	end
 end
